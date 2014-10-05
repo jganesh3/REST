@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import bankservice.helper.Helper;
 import utilities.dataBase.DBUtil;
@@ -19,28 +20,32 @@ import utilities.dataBase.DBUtil;
 @Path("/balanceinq")
 public class BalanceInq {
 	
+	Response rs;
+	
 	private Helper helper=new Helper();
 	@GET
 	@Path("{accountNumber}")
 	@Consumes("application/text")
 	@Produces("application/json")
-	public String getBalance(@PathParam("accountNumber") String accountNumber){
+	public Response getBalance(@PathParam("accountNumber") String accountNumber){
 		
 		
 		//check if the input account number is null.
 		if(accountNumber==null)
-			return "Error";
+			return Response.status(400).entity("Account number can't be null").build();
 		
 		//check if the account number is present
 		if(helper.validAccountNumber(accountNumber)){
 			
 		double balance=helper.getAvailableBalance(accountNumber);
 		
-		return Double.toString(balance);
+		//return Double.toString(balance);
+		
+		return rs.ok(Double.toString(balance)).build();
 		
 			
 		}else
-			return "NOK";
+			return rs.status(400).entity("Please enter valid account number").build();
 		
 		
 		

@@ -28,8 +28,8 @@ public class fundTransfer {
 	@Produces("application/json")
 	public String transfer(@QueryParam("fromAccount") String fromAccount,@QueryParam("toAccount") String toAccount, @QueryParam("txnAmmount") double txnAmmount){
 		
-	
 		
+		//http://localhost:8080/bankingService/api/balanceinq/111111
 		//first get the balance of the from account
 		//check if from account has sufficient ammount
 		// if yes, check if the toaccount is present
